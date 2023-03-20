@@ -1,0 +1,37 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: ms-bill
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/My-Realm
+            jwk-set-uri: http://localhost:8080/realms/My-Realm/protocol/openid-connect/certs
+        registration:
+          ms-bill:
+            provider: keycloak
+            client-id: internal
+            client-secret: Ml0VzE8xN2cPNIKmHVO6i7ncxkrS4pav
+            redirect-uri: http://localhost:8086/login/oauth2/keycloak
+
+  data:
+    mongodb:
+      username: usrmongo
+      password: pwdmongo
+      database: billmongo
+      port: 27019
+      host: localhost
+
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
