@@ -113,7 +113,8 @@ Microservicio de peliculas (movies-api)
 | POST        | /movies/{imdbId}/comments            | ROLE_admin, ROLE_client             | Añade un comentario a una pelicula específica. El texto del comentario y el nombre del autor (Obtenidos de Principal) son provistos en el Body del request, junto con el imdbId de la pelicula en la URL. | No |
 
 
-Al servicio de ms-bills se le configuró  la seguridad para que todos sus endpoints puedan ser consumidos únicamente por usuarios autenticados. Hasta este punto solo usuarios pertenecientes al grupo “provider” podrán dar de alta nuevas facturas.
+Se ha configurado la seguridad del servicio ms-bills para que solo los usuarios autenticados puedan acceder a sus endpoints. Hasta este punto solo usuarios pertenecientes al grupo “provider” podrán acceder a los endpoints de dicho microservicio.
 
-Se incorpora a este servicio la dependencia de Spring Cloud en pom.xml para utilizar Feign, se configuró Feign con OAuth2, se establece el interceptor de request para inyectar el token de seguridad en todas las llamadas realizadas por Feign y definí la clase OAuthClientCredentialsFeignManager. Luego se creó el endpoint solicitado para que los clientes puedan visualizar todas las facturas asociadas a un usuario de Keycloak y sus datos. Este endpoint únicamente puede ser consumido por usuarios CLIENT. Para crear este endpoint en ms-bills, primero se creó un nuevo endopoint en user-service para buscar a un usuario de Keycloak con sus datos por nombre de usuario. Este endpoint también puede ser consumido únicamente por usuarios CLIENT. Ms-bills se comunica con user-service y consume este endpoint de user-service a través de Feign.
+Para permitir el acceso a los usuarios "client" a un nuevo endpoint que permite ver todas las facturas asociadas a un usuario de Keycloak y sus datos, se ha agregado la dependencia de Spring Cloud en el archivo pom.xml y se ha configurado Feign con OAuth2. También se ha establecido un interceptor de solicitud para inyectar el token de seguridad en todas las llamadas realizadas por Feign. Se creó la clase OAuthClientCredentialsFeignManager para gestionar la autenticación.
+
 
